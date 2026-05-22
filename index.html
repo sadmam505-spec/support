@@ -87,71 +87,94 @@
 
         /* ==========================================================================
            3. DYNAMIC TICKET HISTORY & MESSAGING ARCHIVE
-           ========================================================================== */
-        .section-divider-title {
-            font-size: 11px; color: #a0b3af; text-transform: uppercase;
-            letter-spacing: 1.5px; font-weight: 700; margin: 5px 0 14px 4px;
-            display: flex; align-items: center; justify-content: space-between;
-        }
-        
-        .ticket-list { display: flex; flex-direction: column; gap: 14px; }
-        
-        /* Empty State */
-        .empty-tickets {
-            text-align: center; padding: 40px 20px; color: #64748b;
-            font-size: 13px; font-weight: 500;
-            border: 1px dashed rgba(255,255,255,0.05); border-radius: 16px;
-        }
-        .empty-tickets i { font-size: 32px; color: rgba(255,255,255,0.1); margin-bottom: 10px; }
+		========================================================================== */
+		.section-divider-title {
+		font-size: 11px; color: #a0b3af; text-transform: uppercase;
+		letter-spacing: 1.5px; font-weight: 700; margin: 5px 0 14px 4px;
+		display: flex; align-items: center; justify-content: space-between;
+		}
 
-        /* Ticket Item Card */
-        .ticket-card {
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 16px; padding: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
+		.ticket-list { display: flex; flex-direction: column; gap: 14px; }
 
-        .ticket-meta-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-        .ticket-id { font-size: 11px; font-family: monospace; color: #a0b3af; font-weight: 600; }
-        
-        /* Status Badges */
-        .status-badge { font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .status-pending { background: rgba(255, 145, 77, 0.1); border: 1px solid rgba(255, 145, 77, 0.3); color: #ff914d; }
-        .status-answered { background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.3); color: #4ade80; animation: pulse-border 2s infinite ease-in-out; }
-        
-        @keyframes pulse-border {
-            0% { border-color: rgba(74, 222, 128, 0.3); box-shadow: 0 0 5px rgba(74, 222, 128, 0.1); }
-            50% { border-color: rgba(74, 222, 128, 0.8); box-shadow: 0 0 12px rgba(74, 222, 128, 0.3); }
-            100% { border-color: rgba(74, 222, 128, 0.3); box-shadow: 0 0 5px rgba(74, 222, 128, 0.1); }
-        }
+		/* Empty State */
+		.empty-tickets {
+		text-align: center; padding: 40px 20px; color: #64748b;
+		font-size: 13px; font-weight: 500;
+		border: 1px dashed rgba(255,255,255,0.05); border-radius: 16px;
+		}
+		.empty-tickets i { font-size: 32px; color: rgba(255,255,255,0.1); margin-bottom: 10px; }
 
-        .ticket-category { font-size: 13px; font-weight: 700; color: #ffffff; margin: 0 0 6px 0; text-transform: capitalize; }
-        .ticket-msg { font-size: 12.5px; color: #cbd5e1; margin: 0 0 12px 0; line-height: 1.5; word-wrap: break-word; }
-        
-        /* Admin Interactive Reply Box */
-        .admin-reply-box {
-            background: linear-gradient(135deg, rgba(4, 68, 52, 0.5) 0%, rgba(2, 35, 28, 0.5) 100%);
-            border-left: 3px solid #4ade80; border-radius: 8px;
-            padding: 12px; margin-top: 8px;
-        }
-        .admin-label { font-size: 10px; color: #4ade80; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
-        .admin-text { font-size: 12px; color: #e2e8f0; margin: 0; line-height: 1.4; font-weight: 500; }
+		/* Ticket Item Card */
+		.ticket-card {
+		background: rgba(0, 0, 0, 0.2);
+		border: 1px solid rgba(255, 255, 255, 0.04);
+		border-radius: 16px; padding: 16px;
+		box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+		}
 
-        /* Simulating Tool Button */
-        .simulate-panel {
-            background: rgba(255, 215, 0, 0.03); border: 1px dashed rgba(255, 215, 0, 0.2);
-            border-radius: 12px; padding: 12px; margin-top: 20px; text-align: center;
-        }
-        .sim-btn { background: transparent; border: none; color: #ffd700; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; text-decoration: underline; }
-    </style>
+		.ticket-meta-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+		.ticket-id { font-size: 11px; font-family: monospace; color: #a0b3af; font-weight: 600; }
+
+		/* Status Badges */
+		.status-badge { font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+		.status-pending { background: rgba(255, 145, 77, 0.1); border: 1px solid rgba(255, 145, 77, 0.3); color: #ff914d; }
+		.status-answered { background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.3); color: #4ade80; animation: pulse-border 2s infinite ease-in-out; }
+
+		@keyframes pulse-border {
+		0% { border-color: rgba(74, 222, 128, 0.3); box-shadow: 0 0 5px rgba(74, 222, 128, 0.1); }
+		50% { border-color: rgba(74, 222, 128, 0.8); box-shadow: 0 0 12px rgba(74, 222, 128, 0.3); }
+		100% { border-color: rgba(74, 222, 128, 0.3); box-shadow: 0 0 5px rgba(74, 222, 128, 0.1); }
+		}
+
+		.ticket-category { font-size: 13px; font-weight: 700; color: #ffffff; margin: 0 0 6px 0; text-transform: capitalize; }
+		.ticket-msg { font-size: 12.5px; color: #cbd5e1; margin: 0 0 12px 0; line-height: 1.5; word-wrap: break-word; }
+
+		/* Admin Interactive Reply Box */
+		.admin-reply-box {
+		background: linear-gradient(135deg, rgba(4, 68, 52, 0.5) 0%, rgba(2, 35, 28, 0.5) 100%);
+		border-left: 3px solid #4ade80; border-radius: 8px;
+		padding: 12px; margin-top: 8px;
+		}
+		.admin-label { font-size: 10px; color: #4ade80; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
+		.admin-text { font-size: 12px; color: #e2e8f0; margin: 0; line-height: 1.4; font-weight: 500; }
+
+		/* Simulating Tool Button */
+		.simulate-panel {
+		background: rgba(255, 215, 0, 0.03); border: 1px dashed rgba(255, 215, 0, 0.2);
+		border-radius: 12px; padding: 12px; margin-top: 20px; text-align: center;
+		}
+		.sim-btn { background: transparent; border: none; color: #ffd700; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; text-decoration: underline; }
+
+
+		.premium-select {
+		width: 100%;
+		background: #044434 !important;
+		border: 1px solid rgba(74, 222, 128, 0.3) !important;
+		border-radius: 12px;
+		color: white !important;
+		padding: 12px 14px;
+		font-size: 13.5px;
+		outline: none;
+		cursor: pointer;
+		/* অ্যারো আইকন ফেরত আনা হয়েছে নিচে */
+		background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234ade80' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+		background-repeat: no-repeat;
+		background-position: right 12px center;
+		background-size: 16px;
+		appearance: auto; /* এটি দিলে অ্যারো অটোমেটিক আসে */
+		-webkit-appearance: auto;
+		}
+
+	</style>
 </head>
 <body>
 
     <div class="app-container">
         
         <div class="nav-header">
-            <a href="index.html" class="back-btn"><i class="fa-solid fa-chevron-left"></i></a>
+			<a href="https://dashboard.gritorax.com" class="back-btn">
+				<i class="fa-solid fa-house"></i>
+			</a>
             <h3>Support Center</h3>
             <div class="live-badge"><i class="fa-solid fa-circle" style="font-size:7px; vertical-align:middle; margin-right:4px; animation: blink 1.5s infinite;"></i> Live</div>
         </div>
@@ -330,10 +353,16 @@
 
         function closeApp() {
             if (window.Telegram && window.Telegram.WebApp) {
-                window.Telegram.WebApp.close();
-            }
-        }
-    </script>
+					window.Telegram.WebApp.close();
+					}
+					}
+
+					// ব্যাক নেভিগেশন হ্যান্ডেলার
+					history.pushState(null, null, window.location.href);
+					window.addEventListener('popstate', function(event) {
+					window.location.href = "https://dashboard.gritorax.com";
+					});
+				</script>
     
     <style>
         @keyframes blink { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
