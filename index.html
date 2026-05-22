@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>Grifity Premium Support Engine</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+    <style>
+        /* ==========================================================================
+           1. PREMIUM THEME ALIGNMENT & DESIGN SYSTEM
+           ========================================================================== */
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            margin: 0; 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            background-color: #033327; 
+            color: white; 
+            display: flex; 
+            justify-content: center; 
+        }
+        
+        .app-container { 
+            width: 100%; 
+            max-width: 450px; 
+            background: linear-gradient(180deg, #044434 0%, #02261d 100%); 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            padding: 24px 16px 40px 16px;
+            overflow-y: auto;
+        }
+
+        /* Top Luxury Navbar */
+        .nav-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+        .back-btn { 
+            background: rgba(255,255,255,0.03); 
+            border: 1px solid rgba(255,255,255,0.08); 
+            color: white; width: 38px; height: 38px; 
+            border-radius: 50%; display: flex; justify-content: center; align-items: center; 
+            cursor: pointer; text-decoration: none; font-size: 14px; transition: background 0.2s;
+        }
+        .back-btn:active { background: rgba(255,255,255,0.1); }
+        .nav-header h3 { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; color: #ffffff; }
+        .live-badge { background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.3); color: #4ade80; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* ==========================================================================
+           2. NEW TICKET CREATION STATION (INPUT HUB)
+           ========================================================================== */
+        .ticket-creator-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px; padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 25px;
+        }
+        
+        .card-header-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .card-header-meta i { font-size: 20px; color: #4ade80; filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.4)); }
+        .card-header-meta h4 { margin: 0; font-size: 15px; font-weight: 700; color: #fff; }
+
+        .form-group { margin-bottom: 14px; position: relative; }
+        .form-group label { display: block; font-size: 10px; color: #a0b3af; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; margin-left: 2px; }
+        
+        .premium-select, .premium-textarea {
+            width: 100%; background: rgba(0, 0, 0, 0.3); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            border-radius: 12px; color: white; padding: 12px 14px; 
+            font-size: 13.5px; font-weight: 500; outline: none;
+            transition: all 0.25s ease;
+        }
+        .premium-select:focus, .premium-textarea:focus {
+            border-color: #4ade80; box-shadow: 0 0 10px rgba(74, 222, 128, 0.15); background: rgba(0, 0, 0, 0.45);
+        }
+        .premium-textarea { resize: none; height: 90px; font-family: inherit; }
+
+        .submit-ticket-btn {
+            background: linear-gradient(135deg, #4ade80 0%, #2ecc71 100%);
+            color: #044434; border: none; width: 100%; padding: 14px;
+            border-radius: 12px; font-size: 13px; font-weight: 800; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            box-shadow: 0 5px 15px rgba(74, 222, 128, 0.2);
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: transform 0.1s;
+        }
+        .submit-ticket-btn:active { transform: scale(0.97); }
+
+        /* ==========================================================================
+           3. DYNAMIC TICKET HISTORY & MESSAGING ARCHIVE
+           ========================================================================== */
+        .section-divider-title {
+            font-size: 11px; color: #a0b3af; text-transform: uppercase;
+            letter-spacing: 1.5px; font-weight: 700; margin: 5px 0 14px 4px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        
+        .ticket-list { display: flex; flex-direction: column; gap: 14px; }
+        
+        /* Empty State */
+        .empty-tickets {
+            text-align: center; padding: 40px 20px; color: #64748b;
+            font-size: 13px; font-weight: 500;
+            border: 1px dashed rgba(255,255,255,0.05); border-radius: 16px;
+        }
+        .empty-tickets i { font-size: 32px; color: rgba(255,255,255,0.1); margin-bottom: 10px; }
+
+        /* Ticket Item Card */
+        .ticket-card {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 16px; padding: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .ticket-meta-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+        .ticket-id { font-size: 11px; font-family: monospace; color: #a0b3af; font-weight: 600; }
+        
+        /* Status Badges */
+        .status-badge { font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .status-pending { background: rgba(255, 145, 77, 0.1); border: 1px solid rgba(255, 145, 77, 0.3); color: #ff914d; }
+        .status-answered { background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.3); color: #4ade80; animation: pulse-border 2s infinite ease-in-out; }
+        
+        @keyframes pulse-border {
+            0% { border-color: rgba(74, 222, 128, 0.3); box-shadow: 0 0 5px rgba(74, 222, 128, 0.1); }
+            50% { border-color: rgba(74, 222, 128, 0.8); box-shadow: 0 0 12px rgba(74, 222, 128, 0.3); }
+            100% { border-color: rgba(74, 222, 128, 0.3); box-shadow: 0 0 5px rgba(74, 222, 128, 0.1); }
+        }
+
+        .ticket-category { font-size: 13px; font-weight: 700; color: #ffffff; margin: 0 0 6px 0; text-transform: capitalize; }
+        .ticket-msg { font-size: 12.5px; color: #cbd5e1; margin: 0 0 12px 0; line-height: 1.5; word-wrap: break-word; }
+        
+        /* Admin Interactive Reply Box */
+        .admin-reply-box {
+            background: linear-gradient(135deg, rgba(4, 68, 52, 0.5) 0%, rgba(2, 35, 28, 0.5) 100%);
+            border-left: 3px solid #4ade80; border-radius: 8px;
+            padding: 12px; margin-top: 8px;
+        }
+        .admin-label { font-size: 10px; color: #4ade80; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
+        .admin-text { font-size: 12px; color: #e2e8f0; margin: 0; line-height: 1.4; font-weight: 500; }
+
+        /* Simulating Tool Button */
+        .simulate-panel {
+            background: rgba(255, 215, 0, 0.03); border: 1px dashed rgba(255, 215, 0, 0.2);
+            border-radius: 12px; padding: 12px; margin-top: 20px; text-align: center;
+        }
+        .sim-btn { background: transparent; border: none; color: #ffd700; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <div class="nav-header">
+            <a href="index.html" class="back-btn"><i class="fa-solid fa-chevron-left"></i></a>
+            <h3>Support Center</h3>
+            <div class="live-badge"><i class="fa-solid fa-circle" style="font-size:7px; vertical-align:middle; margin-right:4px; animation: blink 1.5s infinite;"></i> Live</div>
+        </div>
+
+        <div class="ticket-creator-card">
+            <div class="card-header-meta">
+                <i class="fa-solid fa-pen-to-square"></i>
+                <h4>Open a New Ticket</h4>
+            </div>
+            
+            <form id="ticketForm" onsubmit="createNewTicket(event)">
+                <div class="form-group">
+                    <label for="ticketCategory">Select Issue Category</label>
+                    <select id="ticketCategory" class="premium-select" required>
+                        <option value="points">Points / Reward Not Added</option>
+                        <option value="withdrawal">Withdrawal / Redeem Issue</option>
+                        <option value="task">Task Bug or Glitch</option>
+                        <option value="other">Other Account Inquiries</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="ticketMessage">Describe Your Problem Closely</label>
+                    <textarea id="ticketMessage" class="premium-textarea" placeholder="Please write details here. Our team will review this instantly..." required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-ticket-btn">
+                    <i class="fa-solid fa-paper-plane"></i> Submit Premium Ticket
+                </button>
+            </form>
+        </div>
+
+        <div class="section-divider-title">
+            <span>Your Active Tickets</span>
+            <span id="ticketCount" style="opacity: 0.6; font-family: monospace;">(0)</span>
+        </div>
+
+        <div id="ticketContainer" class="ticket-list">
+            </div>
+
+        <div class="simulate-panel">
+            <button class="sim-btn" onclick="simulateAdminReply()">
+                <i class="fa-solid fa-robot"></i> Simulate Admin Reply (Test System)
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // Local Storage Key Setup
+        const REPO_STORAGE_KEY = "grifity_support_tickets";
+
+        // অ্যাপ লোড হওয়ার সাথে সাথে ওল্ড টিকিট লোড হবে
+        document.addEventListener("DOMContentLoaded", loadTickets);
+
+        // ১. নতুন টিকিট ক্রিয়েট করার ফাংশন
+        function createNewTicket(event) {
+            event.preventDefault();
+            
+            const category = document.getElementById("ticketCategory").value;
+            const message = document.getElementById("ticketMessage").value;
+            
+            if(!message.trim()) return;
+
+            // প্রিমিয়াম ইউনিক আইডি এবং বর্তমান টাইমিং জেনারেট
+            const ticketId = "TK-" + Math.floor(100000 + Math.random() * 900000);
+            
+            const newTicket = {
+                id: ticketId,
+                category: category,
+                message: message,
+                status: "pending",
+                reply: null
+            };
+
+            // লেকাল স্টোরেজে পুশ করা
+            let existingTickets = JSON.parse(localStorage.getItem(REPO_STORAGE_KEY)) || [];
+            existingTickets.unshift(newTicket); // একদম লেটেস্ট টিকিট উপরে থাকবে
+            localStorage.setItem(REPO_STORAGE_KEY, JSON.stringify(existingTickets));
+
+            // ফর্ম রিসেট ও রি-রেন্ডার
+            document.getElementById("ticketMessage").value = "";
+            loadTickets();
+        }
+
+        // ২. লোকাল স্টোরেজ থেকে টিকিট ডাটা UI-তে রেন্ডার করার মেকানিজম
+        function loadTickets() {
+            const container = document.getElementById("ticketContainer");
+            const counterLabel = document.getElementById("ticketCount");
+            let tickets = JSON.parse(localStorage.getItem(REPO_STORAGE_KEY)) || [];
+            
+            counterLabel.innerText = `(${tickets.length})`;
+
+            if (tickets.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-tickets">
+                        <i class="fa-solid fa-folder-open"></i>
+                        <p>No active support tickets found.<br>Need help? Submit a ticket above.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let htmlContent = "";
+            
+            tickets.forEach(ticket => {
+                const statusClass = ticket.status === 'answered' ? 'status-answered' : 'status-pending';
+                const statusText = ticket.status === 'answered' ? 'Answered' : 'Pending Review';
+                
+                let replyMarkup = "";
+                if (ticket.reply) {
+                    replyMarkup = `
+                        <div class="admin-reply-box">
+                            <div class="admin-label">
+                                <i class="fa-solid fa-shield-halved"></i> Official Response
+                            </div>
+                            <p class="admin-text">${ticket.reply}</p>
+                        </div>
+                    `;
+                }
+
+                htmlContent += `
+                    <div class="ticket-card" id="card-${ticket.id}">
+                        <div class="ticket-meta-top">
+                            <span class="ticket-id">${ticket.id}</span>
+                            <span class="status-badge ${statusClass}">${statusText}</span>
+                        </div>
+                        <h4 class="ticket-category"><i class="fa-solid fa-tags" style="font-size:11px; color:#4ade80; margin-right:5px;"></i> ${getCategoryTitle(ticket.category)}</h4>
+                        <p class="ticket-msg">${escapeHTML(ticket.message)}</p>
+                        ${replyMarkup}
+                    </div>
+                `;
+            });
+
+            container.innerHTML = htmlContent;
+        }
+
+        // ক্যাটাগরি টেক্সটকে সুন্দর করার হেল্পার
+        function getCategoryTitle(cat) {
+            if(cat === 'points') return "Points & Rewards";
+            if(cat === 'withdrawal') return "Withdrawal Status";
+            if(cat === 'task') return "Task Reporting";
+            return "General Account Help";
+        }
+
+        // এক্স-সাইট স্ক্রিপ্টিং প্রোটেকশন
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        // ৩. অ্যাডমিন রিপ্লাই সিমুলেশন (টেস্ট করার জন্য সিক্রেট পাওয়ার বাটন)
+        function simulateAdminReply() {
+            let tickets = JSON.parse(localStorage.getItem(REPO_STORAGE_KEY)) || [];
+            
+            // প্রথম পেন্ডিং টিকিটটি খোঁজা হবে উত্তর দেওয়ার জন্য
+            let pendingTicket = tickets.find(t => t.status === "pending");
+
+            if (!pendingTicket) {
+                alert("Please submit a new ticket first to test the Admin Reply system!");
+                return;
+            }
+
+            // টিকিট স্ট্যাটাস আপডেট এবং অ্যাডমিন মেসেজ রাইটিং
+            pendingTicket.status = "answered";
+            pendingTicket.reply = "Hello! We have reviewed your account log carefully. The required adjustment has been made, and your points/status should be perfectly updated now. Thank you for your patience!";
+
+            localStorage.setItem(REPO_STORAGE_KEY, JSON.stringify(tickets));
+            loadTickets();
+
+            // অটো স্ক্রোল টু অ্যানসারড টিকিট
+            const targetCard = document.getElementById(`card-${pendingTicket.id}`);
+            if(targetCard) targetCard.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function closeApp() {
+            if (window.Telegram && window.Telegram.WebApp) {
+                window.Telegram.WebApp.close();
+            }
+        }
+    </script>
+    
+    <style>
+        @keyframes blink { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+    </style>
+</body>
+</html>
